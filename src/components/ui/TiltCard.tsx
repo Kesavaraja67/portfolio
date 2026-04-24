@@ -50,7 +50,7 @@ export default function TiltCard({ children, className = "" }: { children: React
         style={{ transform: "translateZ(30px)" }}
       />
       <div 
-        className="h-full w-full rounded-2xl overflow-hidden bg-white/5 backdrop-blur-sm shadow-2xl"
+        className="relative h-full w-full rounded-2xl overflow-hidden bg-white/5 backdrop-blur-sm shadow-2xl"
         style={{ transform: "translateZ(50px)" }}
       >
         {children}

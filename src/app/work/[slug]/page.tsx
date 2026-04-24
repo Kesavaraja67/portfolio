@@ -1,6 +1,5 @@
 import { SITE_DATA } from "@/lib/data";
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import MagneticButton from "@/components/ui/MagneticButton";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
@@ -27,17 +26,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       </div>
 
       {/* Hero Header */}
-      <header className="relative w-full h-[60vh] md:h-[80vh] flex flex-col justify-end p-6 md:p-24 z-10">
-        <div className="absolute inset-0 z-[-1] opacity-60">
-          <Image 
-            src={project.image} 
-            alt={project.title} 
-            fill 
-            className="object-cover object-center filter blur-md scale-105" 
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg)] via-[var(--bg)]/80 to-transparent"></div>
-        </div>
+      <header className="relative w-full h-[60vh] md:h-[80vh] flex flex-col justify-end p-6 md:p-24 z-10 bg-gradient-to-b from-white/5 via-white/2 to-[var(--bg)]">
         
         <div className="max-w-5xl">
           <div className="flex items-center gap-4 font-mono text-[10px] md:text-xs uppercase tracking-widest text-[var(--cyan)] mb-6">
@@ -95,13 +84,28 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
               {project.description}
             </div>
 
-            <div className="relative w-full aspect-video rounded-xl overflow-hidden mt-10 shadow-2xl border border-white/5">
-              <Image 
-                src={project.image} 
-                alt={`${project.title} Showcase`} 
-                fill 
-                className="object-cover"
-              />
+            {/* Tech Stack & Metrics */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10 p-8 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10">
+              <div>
+                <h3 className="font-mono text-xs uppercase tracking-widest text-[var(--cyan)]/70 mb-4">Tech Stack</h3>
+                <div className="flex flex-wrap gap-2">
+                  {project.tech.map(t => (
+                    <span key={t} className="px-3 py-1 rounded-full bg-white/10 border border-white/10 font-mono text-xs text-white/60 hover:border-[var(--cyan)]/50 hover:text-[var(--cyan)]/80 transition-colors">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              {project.metrics && (
+                <div>
+                  <h3 className="font-mono text-xs uppercase tracking-widest text-[var(--cyan)]/70 mb-4">Key Metrics</h3>
+                  <div className="flex flex-col gap-2">
+                    {project.metrics.map(m => (
+                      <p key={m} className="font-cabinet text-sm text-white/70">✓ {m}</p>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 

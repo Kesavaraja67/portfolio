@@ -35,8 +35,7 @@ export default function Work() {
         {SITE_DATA.projects.map((project, index) => (
           <div key={project.id} className="relative">
             <Link
-              href={project.link}
-              target="_blank"
+              href={`/work/${project.id}`}
               className="group relative flex flex-col xl:flex-row items-start xl:items-center justify-between py-10 md:py-14 hover:bg-white/[0.02] transition-colors duration-300 cursor-none px-4 md:px-8 -mx-4 md:-mx-8"
               onMouseEnter={() => setHovered(index)}
               onMouseLeave={() => setHovered(null)}
