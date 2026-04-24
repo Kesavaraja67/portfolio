@@ -53,7 +53,7 @@ export default function Preloader() {
     // 4. Curtain wipes UP revealing the site
     tl.to(containerRef.current, {
       y: "-100%",
-      duration: 0.8,
+      duration: 0.28,
       ease: "expo.inOut"
     }, 1.9);
 
