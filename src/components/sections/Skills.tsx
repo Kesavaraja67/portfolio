@@ -1,5 +1,7 @@
 "use client";
 
+import { useRef } from "react";
+import { useInView } from "framer-motion";
 import BlurIn from "@/components/ui/BlurIn";
 import Marquee from "@/components/ui/Marquee";
 import { SITE_DATA } from "@/lib/data";
@@ -7,7 +9,9 @@ import { useCursorStore } from "@/lib/store";
 
 export default function Skills() {
   const { setHoverState } = useCursorStore();
-  
+  const categoriesRef = useRef<HTMLDivElement>(null);
+  const categoriesInView = useInView(categoriesRef, { once: true, margin: "-10% 0px" });
+
   const allSkills = Object.values(SITE_DATA.skills).flat();
 
   return (
@@ -21,29 +25,33 @@ export default function Skills() {
           </div>
         </BlurIn>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-12 md:gap-20 mt-12">
+        <div ref={categoriesRef} className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-12 md:gap-20 mt-12">
           {Object.entries(SITE_DATA.skills).map(([category, skills], i) => (
-            <BlurIn key={category} delay={0.1 + i * 0.1}>
-              <div className="flex flex-col gap-6">
-                <h3 className="font-mono text-sm uppercase tracking-widest text-[var(--cyan)] border-b border-white/20 pb-4 mb-2">
-                  {"// "}
-                  {category}
-                </h3>
-                
-                <div className="flex flex-wrap gap-3">
-                  {skills.map((skill) => (
-                    <div 
-                      key={skill}
-                      className="px-5 py-2.5 rounded-full border border-white/10 bg-white/5 font-cabinet text-sm md:text-base text-white/80 hover:bg-[var(--cyan)] hover:text-black hover:border-transparent transition-all duration-300 transform hover:-translate-y-1 cursor-none backdrop-blur-sm"
-                      onMouseEnter={() => setHoverState(true, 'text')}
-                      onMouseLeave={() => setHoverState(false)}
-                    >
-                      {skill}
-                    </div>
-                  ))}
-                </div>
+            <div
+              key={category}
+              className={`flex flex-col gap-6 transition-[opacity,transform] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                categoriesInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+              }`}
+              style={{ transitionDelay: `${0.1 + i * 0.08}s` }}
+            >
+              <h3 className="font-mono text-sm uppercase tracking-widest text-[var(--cyan)] border-b border-white/20 pb-4 mb-2">
+                {"// "}
+                {category}
+              </h3>
+              
+              <div className="flex flex-wrap gap-3">
+                {skills.map((skill) => (
+                  <div 
+                    key={skill}
+                    className="px-5 py-2.5 rounded-full border border-white/10 bg-white/5 font-cabinet text-sm md:text-base text-white/80 hover:bg-[var(--cyan)] hover:text-black hover:border-transparent transition-all duration-300 transform hover:-translate-y-1 cursor-none backdrop-blur-sm"
+                    onMouseEnter={() => setHoverState(true, 'text')}
+                    onMouseLeave={() => setHoverState(false)}
+                  >
+                    {skill}
+                  </div>
+                ))}
               </div>
-            </BlurIn>
+            </div>
           ))}
         </div>
       </div>
